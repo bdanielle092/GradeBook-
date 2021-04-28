@@ -12,6 +12,10 @@ namespace GradeBook
 
             //instantiaiting the book which mean creating a new object using the new keyword
             var book = new Book("Faith's Grade Book ");
+            book.GradeAdded += OnGradAdded;
+            book.GradeAdded += OnGradAdded;
+            book.GradeAdded -= OnGradAdded;
+            book.GradeAdded += OnGradAdded;
 
 
             while (true)
@@ -44,12 +48,19 @@ namespace GradeBook
 
 
             var stats = book.GetStatistics();
+            Console.WriteLine(Book.CATEGORY);
+            Console.WriteLine($"For the book named {book.Name}");
             Console.WriteLine($"This is the lowest grade {stats.Low}");
             Console.WriteLine($"This is the highest grade {stats.High}");
             Console.WriteLine($"The average grade is {stats.Average:N1}");
             Console.WriteLine($"The letter grade is {stats.Letter}");
 
 
+        }
+
+        static void OnGradAdded(object sender, EventArgs e)
+        {
+            Console.WriteLine("A grade was Added");
         }
     }
 }

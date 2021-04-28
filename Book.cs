@@ -5,6 +5,7 @@ namespace GradeBook
 {
     public class Book
     {
+        public delegate void GradeAddDelegate(object sender, EventArgs args);
 
 
         //constructor - has the same name as the class and no return type
@@ -15,7 +16,7 @@ namespace GradeBook
             Name = name;
         }
 
-        public void AddLetterGrade(char letter)
+        public void AddGrade(char letter)
         {
             switch (letter)
             {
@@ -38,12 +39,18 @@ namespace GradeBook
             if (grade <= 100 && grade >= 0)
             {
                 grades.Add(grade);
+                if (GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
                 throw new ArgumentException($"Invaid {nameof(grade)}");
             }
         }
+
+        public event GradeAddDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
@@ -85,7 +92,9 @@ namespace GradeBook
             return result;
         }
         private List<double> grades;
-        public string Name;
+        public string Name { get; set; }
+        public const string CATEGORY = "Science";
+
 
 
     }
